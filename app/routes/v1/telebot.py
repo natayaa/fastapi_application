@@ -3,9 +3,9 @@ from fastapi import APIRouter, status, HTTPException, Request
 from fastapi.concurrency import run_in_threadpool
 from fastapi import File, UploadFile, Form
 
-TOKEN_BOT = "7454607389:AAGGhl9F-B2f7SfNsBVTW0UZGceDFiT40F4"
+TOKEN_BOT = "-"
 API_TELE_BOT = "https://api.telegram.org/bot"
-chat_id = "6284083234" # -> Target to Chat
+chat_id = "-" # -> Target to Chat
 
 tele_bot_client = APIRouter(prefix="/app/handler/v2", tags=["Tele Bot"])\
 
