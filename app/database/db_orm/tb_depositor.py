@@ -14,5 +14,5 @@ class TBDepositor(Base):
     debt_phone_number = Column(String)
     debt_email = Column(String)
     debt_assurance = Column(String)
-    debt_status = Column(Boolean, deafult=False)
+    debt_status = Column(Boolean, default=False)
     debt_due_date = Column(String)

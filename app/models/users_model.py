@@ -43,3 +43,18 @@ class RegisterResponse(BaseModel):
     status_code: int
     message: str
     data: retvalRegister
+
+
+class UserDetailUpdate(BaseModel):
+    phone_number: str = None
+    email: str = None
+    firstname: str = None
+    middlename: str = None
+    lastname: str = None
+    address_1: str = None
+    address_2: str = None
+    address_3: str = None
+    bank_id: int = None
+    linked_profile: str = None
+    avatar: bytes = None
+    bank_name: str = None

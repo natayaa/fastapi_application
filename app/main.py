@@ -20,6 +20,7 @@ from routes.v1.redirect import incident_handler
 from routes.v1.upload_file import upload_file
 from routes.v1.users import user_section
 from routes.v1.telebot import tele_bot_client
+from routes.v1.deposit import deposit_client
 
 # logger
 from routes.v1.ext.loggerClass import ProtocolLoggers, logfileHandlers
@@ -61,6 +62,7 @@ endpoints_app.include_router(incident_handler, include_in_schema=True)
 endpoints_app.include_router(upload_file, include_in_schema=True)
 endpoints_app.include_router(user_section)
 endpoints_app.include_router(tele_bot_client)
+endpoints_app.include_router(deposit_client)
 
 
 if __name__ == '__main__':

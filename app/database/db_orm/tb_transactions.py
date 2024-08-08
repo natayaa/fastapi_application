@@ -5,6 +5,7 @@ import uuid
 
 from database.dbconn import Base
 
+
 class TBTransactions(Base):
     __tablename__ = "tb_transactions"
 

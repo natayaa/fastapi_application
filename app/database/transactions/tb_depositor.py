@@ -10,7 +10,7 @@ class DepositorClient(DBConnection):
 
     def get_client_info(self, limit: int, offset: int):
         query = self.session.query(client_depo).offset(offset).limit(limit).all()
-        return query
+        return [item for item in query]
     
     def register_client(self, **client_payload):
         client = client_depo(debt_name=client_payload.get("client_name"),

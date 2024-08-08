@@ -16,6 +16,9 @@ from dependencies.oauth2 import get_current_user
 
 from database.transactions.tb_users_trans import UsersTransaction
 
+# import body model
+from models.users_model import UserDetailUpdate
+
 user_section = APIRouter(prefix="/application/version/v1", tags=['Users'])
 uTrans = UsersTransaction()
 
@@ -57,4 +60,20 @@ async def user_auth(response: Response, user_auth: Annotated[OAuth2PasswordReque
 async def get_user_info(request: Request, username: str, authorization: str = Depends(get_current_user)):
     if username != authorization.username:
         print("false")
-    return {"username": request.headers}
+    user_detail = uTrans.get_detail_user(username=username)
+
+    return {"username": request.headers, "detail": user_detail}
+
+@user_section.put("/user/{username}/details")
+def edit_detail_user(username: str, new_details: UserDetailUpdate):
+    current_user = uTrans.get_user(username)
+    if not current_user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    user_details = uTrans.edit_detail_user(username=username, new_details=new_details.model_dump())
+    if not user_details:
+        raise HTTPException(status_code=404, detail="User details not found")
+
+    
+
+    return {"message": "User details updated successfully"}
