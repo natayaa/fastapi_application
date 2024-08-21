@@ -1,4 +1,4 @@
-from sqlalchemy import or_
+from sqlalchemy import or_, update
 
 from database.db_orm.tb_users import TBUsers, TBUserDetails
 from database.dbconn import DBConnection
@@ -29,6 +29,12 @@ class UsersTransaction(DBConnection):
         getUser = self.get_user(username=username)
         user_detail = self.session.query(TBUserDetails).filter(TBUserDetails.user_id == getUser.id).first()
         return user_detail
+    
+    def update_avatar(self, username: str, avatar: bytes):
+        getDetail = self.get_detail_user(username=username)
+        updateAvatar = getDetail.avatar = avatar
+        return updateAvatar
+        
         
     def edit_detail_user(self, username: str, new_details: dict):
         """

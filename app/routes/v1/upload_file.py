@@ -17,9 +17,19 @@ directory_to_save_file = "./files/data/"
 
 @upload_file.post("/upload/file-upload")
 async def upload_file_data(request: Request, authorization: str = Depends(get_current_user), file: UploadFile = File(...)):
-    async with aiofiles.open(directory_to_save_file + file.filename, "wb") as bufferfile:
-        while content := await file.read(1024):  # Read file in chunks
-            await bufferfile.write(content)
+    file_path = os.path.join(directory_to_save_file, file.filename)
+
+    # Check if the file already exists on the server
+    if os.path.exists(file_path):
+        raise HTTPException(status_code=400, detail=f"File '{file.filename}' already exists on the server.")
+
+    try:
+        async with aiofiles.open(file_path, "wb") as bufferfile:
+            while content := await file.read(1024):  # Read file in chunks
+                await bufferfile.write(content)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An error occurred while saving the file: {str(e)}")
+
     return {"info": f"File '{file.filename}' saved successfully"}
 
 @upload_file.get("/upload/list-items")
@@ -37,7 +47,7 @@ async def listing_files(request: Request, authorization: str = Depends(get_curre
     
 
 @upload_file.post("/upload/image-to-text")
-async def image_to_text(request: Request, file: UploadFile = File(...)):
+async def image_to_text(authorization: str = Depends(get_current_user), file: UploadFile = File(...)):
     if not file.content_type.startswith("image/"):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Uploaded file is not an image")
     try:

@@ -1,0 +1,25 @@
+iplimage
+Hello ,
+Thank you for registering an account with Palo Alto Networks. Your account must be activated before you
+can use it. To activate or set your password, click on the following link or copy-paste it in your browser:
+Activate Account
+
+After activating the account, login to https://support.paloaltonetworks.com using the email and password
+you registered with Customer Support Portal (CSP)
+
+4, E-mail - ivan azhari@global.ntt
+
+2. Password - [Your Password]
+Ifthe link expires, please request another reset link and a new link will be emailed to you
+
+Security Advisories and Software Update Notifications
+
+When you register as a customer of Palo Alto Networks, you are automatically subscribed to
+
+1. Security advisories
+
+2. Software update notifications
+To manage these and other notification preferences, such as industry and company news, events, best
+practices, and more, please visit CSP Preferences Page.
+
+More Resources

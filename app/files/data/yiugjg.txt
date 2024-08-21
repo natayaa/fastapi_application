@@ -1,0 +1,7 @@
+DEMISTO API Endpoints -> Scripts -> Playbook 
+Playbook -> Automation ?
+
+Scripts will requests to Demisto API ?
+Scripts will requests to Demisto Endpoints ? 
+Scripts will automate instantly ?
+

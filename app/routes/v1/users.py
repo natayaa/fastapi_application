@@ -1,5 +1,5 @@
 from fastapi import APIRouter, status, HTTPException, Depends, Request
-from fastapi import Header
+from fastapi import File, UploadFile
 from fastapi.responses import JSONResponse, Response, RedirectResponse
 from fastapi.security import OAuth2PasswordRequestForm
 
@@ -7,6 +7,8 @@ from typing_extensions import Annotated, Optional
 
 from decouple import config
 from datetime import timedelta
+
+import os
 
 # load model for the user
 from models.users_model import RegisterResponse, RegisterUserModel
@@ -65,15 +67,25 @@ async def get_user_info(request: Request, username: str, authorization: str = De
     return {"username": request.headers, "detail": user_detail}
 
 @user_section.put("/user/{username}/details")
-def edit_detail_user(username: str, new_details: UserDetailUpdate):
-    current_user = uTrans.get_user(username)
+def edit_detail_user(new_details: UserDetailUpdate, username: str, authorization: str = Depends(get_current_user)):
+    current_user = uTrans.get_user(authorization.username)
     if not current_user:
         raise HTTPException(status_code=404, detail="User not found")
 
-    user_details = uTrans.edit_detail_user(username=username, new_details=new_details.model_dump())
+    user_details = uTrans.edit_detail_user(username=authorization.username, new_details=new_details.model_dump())
     if not user_details:
         raise HTTPException(status_code=404, detail="User details not found")
 
     
 
     return {"message": "User details updated successfully"}
+
+
+@user_section.put("/user/{username}/details/avatar")
+async def upload_avatar(username: str = Depends(get_current_user), avatar: UploadFile = File(...)):
+    if not username:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    av  = await avatar.read()
+    avtf = uTrans.update_avatar(username, av)
+    return avtf

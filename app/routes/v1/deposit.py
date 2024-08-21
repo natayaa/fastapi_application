@@ -5,7 +5,6 @@ from database.transactions.tb_depositor import DepositorClient
 from models.depositor_client import AddNewClient
 
 from datetime import datetime
-import json
 
 from dependencies.oauth2 import get_current_user
 
@@ -24,7 +23,7 @@ async def get_client(request: Request, authorization: str = Depends(get_current_
     
 
 @deposit_client.post("/add_client_new")
-async def add_client(request: Request, add_new_client: AddNewClient):
+async def add_client(request: Request, add_new_client: AddNewClient, authorization: str = Depends(get_current_user)):
     datetime_formatted_now = datetime.now().strftime("%Y-%m-%d, %H:%M")
     payload = {"client_name": add_new_client.client_name, "client_loan_amount": add_new_client.client_loan_amount,
                "client_debt_date": datetime_formatted_now, "client_phone_number": add_new_client.client_phone_number,
